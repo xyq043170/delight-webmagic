@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whf.webmagic.dao.DelightWebmagicDao" >
+    <resultMap id="BaseResultMap" type="com.whf.webmagic.entity.DelightWebmagic" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="address_url" property="addressUrl" jdbcType="VARCHAR" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="jpg_url" property="jpgUrl" jdbcType="VARCHAR" />
+        <result column="local_url" property="localUrl" jdbcType="VARCHAR" />
+        <result column="isSave" property="isSave" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="DATE" />
+        <result column="create_time" property="createTime" jdbcType="DATE" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, name, address_url, title,jpg_url,local_url,isSave,update_time,create_time,remark
+    </sql>
+
+    <insert id="insertData"
+            parameterType="com.whf.webmagic.entity.DelightWebmagic">
+		replace into
+		delight_webmagic(id, name, address_url, title,jpg_url,local_url,isSave,create_time,remark)
+		values
+		(#{id},#{name},#{addressUrl},#{title},#{jpgUrl},#{localUrl},'0',NOW(),#{remark})
+	</insert>
+
+    <select id="queryUnSavePic" resultMap="BaseResultMap">
+        select * from delight_webmagic where isSave = '0' limit 0,200
+    </select>
+
+    <update id="updateSaveStatus" parameterType="com.whf.webmagic.entity.DelightWebmagic">
+        update delight_webmagic set isSave = #{isSave},update_time = NOW(),local_url = #{localUrl} where jpg_url = #{jpgUrl}
+    </update>
+
+    <select id="queryRandPic" resultMap="BaseResultMap">
+        select * from delight_webmagic where isSave = '1' ORDER BY RAND() LIMIT 10;
+    </select>
+</mapper>

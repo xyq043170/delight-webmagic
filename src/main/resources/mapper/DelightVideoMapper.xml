@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whf.webmagic.dao.DelightVideoDao" >
+    <resultMap id="BaseResultMap" type="com.whf.webmagic.entity.DelightVideo" >
+        <result column="local_url" property="localUrl" jdbcType="VARCHAR" />
+        <result column="video_name" property="videoName" jdbcType="VARCHAR" />
+        <result column="paly_time" property="palyTime" jdbcType="INTEGER" />
+        <result column="flag" property="flag" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="DATE" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        local_url, video_name,paly_time,flag,create_time
+    </sql>
+
+    <insert id="insertVideoInfo" parameterType="com.whf.webmagic.entity.DelightVideo">
+      replace into delight_video
+      (local_url,video_name,paly_time,create_time)
+      value
+      (
+      #{localUrl},
+      #{videoName},
+      #{palyTime},
+      NOW()
+      )
+    </insert>
+
+    <select id="queryRandVideo" resultMap="BaseResultMap">
+        select * from delight_video where local_url is not null and paly_time != 0 ORDER BY RAND() LIMIT 1;
+    </select>
+
+    <select id="queryRandShortVideo" resultMap="BaseResultMap">
+        select * from delight_video where local_url is not null and paly_time != 0 ORDER BY RAND() LIMIT 20;
+    </select>
+</mapper>

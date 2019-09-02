@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whf.webmagic.dao.DelightVideoResultDao" >
+    <resultMap id="BaseResultMap" type="com.whf.webmagic.entity.DelightVideoResult" >
+        <result column="video_name" property="videoName" jdbcType="VARCHAR" />
+        <result column="film_name" property="filmName" jdbcType="VARCHAR" />
+        <result column="video_num" property="videoNum" jdbcType="INTEGER" />
+        <result column="local_path" property="localPath" jdbcType="VARCHAR" />
+        <result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="DATE" />
+        <result column="create_time" property="createTime" jdbcType="DATE" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        video_name,film_name,video_num, local_path, pic_path,update_time,create_time
+    </sql>
+
+    <insert id="insertVideoResultInfo" parameterType="com.whf.webmagic.entity.DelightVideoResult">
+      replace into delight_video_result
+      (video_name,film_name,video_num, local_path, pic_path,create_time)
+      values
+      (
+      #{videoName},
+      #{filmName},
+      #{videoNum},
+      #{localPath},
+      #{picPath},
+      NOW()
+      )
+    </insert>
+
+    <select id="queryDelightVideoResultInfo" resultMap="BaseResultMap" parameterType="com.whf.webmagic.entity.DelightVideoResult">
+      select * from delight_video_result where video_num = #{videoNum}
+    </select>
+</mapper>

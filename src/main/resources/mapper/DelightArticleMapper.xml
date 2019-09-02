@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whf.webmagic.dao.DelightArticleDao" >
+    <resultMap id="BaseResultMap" type="com.whf.webmagic.entity.DelightArticle" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="channel" property="channel" jdbcType="VARCHAR" />
+        <result column="article_num" property="articleNum" jdbcType="INTEGER" />
+        <result column="update_time" property="updateTime" jdbcType="DATE" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, channel, article_num,update_time
+    </sql>
+
+    <select id="queryArticleNum" resultMap="BaseResultMap">
+        select * from delight_article_num where channel = #{channel}
+    </select>
+
+    <update id="updateArticleNum" parameterType="com.whf.webmagic.entity.DelightArticle">
+        update delight_article_num set article_num = #{articleNum},update_time=NOW() where channel = #{channel}
+    </update>
+</mapper>
